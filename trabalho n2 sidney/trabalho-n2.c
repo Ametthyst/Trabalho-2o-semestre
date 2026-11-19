@@ -12,18 +12,19 @@ int main(){
 	int assentos;
 	int sessao;
 	float preco[3];
-	int numero;
+	int i, j; //criei essas variaveis de controle pra conseguir controlar melhor os loops (ela ta substituindo o antigo "numero")
 	int menu;
+	int erro;
 	
 	printf("Antes de iniciar, escolha os preços das sessões: \n");
-	for(numero = 0;numero < 3; numero++){
-		printf("Escolha o preço da %da sessão: ", numero + 1);
-		scanf("%f", &preco[numero]);
+	for(i = 0; i < 3; i++){
+		printf("Escolha o preço da %da sessão: ", i + 1);
+		scanf("%f", &preco[i]);
 	}
 		
 	printf("\nPreços das sessões: \n");
-	for(numero = 0; numero < 3; numero++){
-		printf("\nSessão %d: %.2f",  numero + 1, preco[numero]);
+	for(i = 0; i < 3; i++){
+		printf("\nSessão %d: %.2f",  i + 1, preco[i]);
 	}
 	
 	printf("\n\n");
@@ -34,27 +35,43 @@ int main(){
 		case 1:	//mostrar mapa de assentos
 		printf("\n Mapa de assentos:\n");
 		printf("Assento    1   2   3   4   5\n");
-		for(sessao = 0; sessao < 3; sessao++){
-		printf("Sessao %d:| ", sessao + 1);
-			for(assentos = 0; assentos < 5; assentos++){
-				printf("%d | ",numeros[sessao][assentos]);
+		for(i = 0; i < 3; i++){
+		printf("Sessao %d:| ", i + 1);
+			for(j = 0; j < 5; j++){
+				printf("%d | ",numeros[i][j]);
 			}
 		printf("\n");
 		}
 		break;
 		
 		case 2: //reservar assento
-		do{
-			printf("Escolha sua sessão: \n");
-			scanf("%d", &sessao);
-	
-			printf("Sua sessão: ");
-			for(assentos = 0; assentos < 5; assentos++){
-				printf("%d | ",numeros[sessao - 1][assentos]);
-		}
-	
-		}while(sessao < 1 && sessao > 4);
-	
+			do{
+				printf("Escolha sua sessão: \n");
+				scanf("%d", &sessao);
+				if(sessao < 1 && sessao > 3){
+					printf("Sessão invalida escolha uma sessão entre 1 e 3\n");
+				}
+			} while(sessao < 1 && sessao > 4);
+			printf("\nAssento    1   2   3   4   5\n");
+			
+			printf("Sessão %d:| ", sessao);
+			for(i = 0; i < 5; i++){
+				printf("%d | ",numeros[sessao - 1][i]);
+			}
+			
+			do {
+				printf("\nEscolha seu assento:\n");
+				scanf("%d", &assentos);
+				if(numeros[sessao - 1][assentos - 1] == 0){
+					numeros[sessao - 1][assentos - 1] = 1;
+					erro = 0;
+				} else{
+					printf("\nAssento ja reservado! escolha um assento válido ou escreva 0 para sair dessa aba\n");
+					erro = 1;
+				}
+				
+			} while(assentos != 0 && erro == 1);	
+
 	
 		break;
 		
