@@ -127,6 +127,10 @@ int main(){
 			break;
 			
 		case 4: //mostrar resumo das sessões
+		valorReservasTotal = 0;
+		qtdAssentosLivresTotal = 0;
+		qtdAssentosReservadosTotal = 0;
+		
 		for(i = 0; i < 3; i++){
 			valorReservas = 0;
 			qtdAssentosReservados = 0;
@@ -134,10 +138,9 @@ int main(){
 			for(j = 0; j < 5; j++){
 				if(numeros[i][j] == 1){
 					qtdAssentosReservados++;
-					qtdAssentosReservadosTotal++;
+					
 				}else{
 					qtdAssentosLivres++;
-					qtdAssentosLivresTotal++;
 				} 
 			}
 			
@@ -150,6 +153,9 @@ int main(){
 			printf("==================\n");	
 			
 			valorReservasTotal += valorReservas;
+			qtdAssentosLivresTotal += qtdAssentosLivres;
+			qtdAssentosReservadosTotal += qtdAssentosReservados;
+			
 		}
 		printf("\n=====Geral=====\n");
 		printf("Quantidade de assentos livres: %d\n", qtdAssentosLivresTotal);
