@@ -15,6 +15,7 @@ int main(){
 	int i, j; //criei essas variaveis de controle pra conseguir controlar melhor os loops (ela ta substituindo o antigo "numero")
 	int menu;
 	int erro;
+	int sessaoCheia;
 	
 	printf("Antes de iniciar, escolha os preços das sessões: \n");
 	for(i = 0; i < 3; i++){
@@ -45,34 +46,46 @@ int main(){
 		break;
 		
 		case 2: //reservar assento
-			do{
-				printf("Escolha sua sessão: \n");
-				scanf("%d", &sessao);
-				if(sessao < 1 && sessao > 3){
-					printf("Sessão invalida escolha uma sessão entre 1 e 3\n");
-				}
-			} while(sessao < 1 && sessao > 4);
-			printf("\nAssento    1   2   3   4   5\n");
-			
-			printf("Sessão %d:| ", sessao);
-			for(i = 0; i < 5; i++){
-				printf("%d | ",numeros[sessao - 1][i]);
+			sessaoCheia = 0; //reseta a variavel sessaoCheia a cada sessão
+			printf("Escolha sua sessão: \n");
+			scanf("%d", &sessao);
+			if(sessao < 1 || sessao > 3){
+			printf("Sessão invalida escolha uma sessão entre 1 e 3\n");
+			continue;
 			}
-			
-			do {
-				printf("\nEscolha seu assento:\n");
-				scanf("%d", &assentos);
-				if(numeros[sessao - 1][assentos - 1] == 0){
-					numeros[sessao - 1][assentos - 1] = 1;
-					erro = 0;
-				} else{
-					printf("\nAssento ja reservado! escolha um assento válido ou escreva 0 para sair dessa aba\n");
-					erro = 1;
+			for(i = 0; i < 5; i++){
+				sessaoCheia += numeros[sessao - 1][i];
+			}
+				
+			if(sessaoCheia == 5){
+				printf("Sessão lotada! escolha outra sessão");
+				continue;
+			}else{
+				
+				printf("\nAssento    1   2   3   4   5\n");
+				
+				printf("Sessão %d:| ", sessao);
+				for(i = 0; i < 5; i++){
+					printf("%d | ",numeros[sessao - 1][i]);
 				}
 				
-			} while(assentos != 0 && erro == 1);	
-
-	
+				do {
+					printf("\nEscolha seu assento:\n");
+					scanf("%d", &assentos);
+					if(assentos < 1 || assentos > 5){
+						printf("Assento inválido, escolha uma opção entre 1 e 5\n");
+						continue;
+					}
+					if(numeros[sessao - 1][assentos - 1] == 0){
+						numeros[sessao - 1][assentos - 1] = 1;
+						erro = 0;
+					}else{
+						printf("\nAssento ja reservado! escolha um assento válido ou escreva 0 para sair dessa aba\n");
+						erro = 1;
+					}	
+				}while(assentos != 0 && erro == 1);
+					
+			}
 		break;
 		
 		case 3: //cancelar reserva
